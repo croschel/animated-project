@@ -8,7 +8,6 @@ import {CARDS} from './src/mocks/cards';
 
 const App = () => {
   const renderCard = (item: ItemCard) => {
-    // return <Text>{item.text}</Text>;
     return (
       <Card key={item.id}>
         <Card.Title>{item.text}</Card.Title>
