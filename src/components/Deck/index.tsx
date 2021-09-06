@@ -4,12 +4,22 @@ import {SCREEN_WIDTH} from '../../utils/metrics';
 
 import {styles} from './styles';
 
+// Constants
+const SWIPE_THRESHOLD = SCREEN_WIDTH * 0.35;
+
 interface DeckProps {
   data: ItemCard[];
   renderCard: (item: ItemCard) => ReactNode;
+  onSwipeLeft: () => void;
+  onSwipeRight: () => void;
 }
 
-export const Deck = ({data, renderCard}: DeckProps) => {
+export const Deck = ({
+  data,
+  renderCard,
+  onSwipeLeft,
+  onSwipeRight,
+}: DeckProps) => {
   const position = useRef(new Animated.ValueXY()).current;
   const panResponder = useRef(
     PanResponder.create({
@@ -18,8 +28,15 @@ export const Deck = ({data, renderCard}: DeckProps) => {
         const {dx} = gesture;
         position.setValue({x: dx, y: 0});
       },
-      onPanResponderRelease: () => {
-        resetCardPosition();
+      onPanResponderRelease: (event, gesture) => {
+        const {dx} = gesture;
+        if (dx > SWIPE_THRESHOLD) {
+          forceSwipe('right');
+        } else if (dx < -SWIPE_THRESHOLD) {
+          forceSwipe('left');
+        } else {
+          resetCardPosition();
+        }
       },
     }),
   ).current;
@@ -32,6 +49,21 @@ export const Deck = ({data, renderCard}: DeckProps) => {
       },
       useNativeDriver: false,
     }).start();
+  };
+
+  const forceSwipe = (direction: PossibleDirectionsSwipe) => {
+    Animated.timing(position, {
+      toValue: {
+        x: direction === 'right' ? SCREEN_WIDTH : -SCREEN_WIDTH,
+        y: 0,
+      },
+      duration: 300,
+      useNativeDriver: false,
+    }).start(() => onSwipeComplete(direction));
+  };
+
+  const onSwipeComplete = (direction: PossibleDirectionsSwipe) => {
+    direction === 'right' ? onSwipeRight() : onSwipeLeft();
   };
 
   const getCardStyles = () => {

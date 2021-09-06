@@ -3,3 +3,5 @@ type ItemCard = {
   text: string;
   uri: string;
 };
+
+type PossibleDirectionsSwipe = 'right' | 'left';

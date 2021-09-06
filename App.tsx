@@ -25,7 +25,12 @@ const App = () => {
     <SafeAreaView>
       <StatusBar barStyle="dark-content" />
       <View style={styles.container}>
-        <Deck data={CARDS} renderCard={renderCard} />
+        <Deck
+          data={CARDS}
+          renderCard={renderCard}
+          onSwipeLeft={() => {}}
+          onSwipeRight={() => {}}
+        />
       </View>
     </SafeAreaView>
   );
