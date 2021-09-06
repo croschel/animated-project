@@ -18,9 +18,21 @@ export const Deck = ({data, renderCard}: DeckProps) => {
         const {dx} = gesture;
         position.setValue({x: dx, y: 0});
       },
-      onPanResponderRelease: () => {},
+      onPanResponderRelease: () => {
+        resetCardPosition();
+      },
     }),
   ).current;
+
+  const resetCardPosition = () => {
+    Animated.spring(position, {
+      toValue: {
+        x: 0,
+        y: 0,
+      },
+      useNativeDriver: false,
+    }).start();
+  };
 
   const getCardStyles = () => {
     const rotate = position.x.interpolate({
