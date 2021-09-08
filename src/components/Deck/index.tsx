@@ -109,9 +109,11 @@ export const Deck = ({
         }
 
         return (
-          <View key={card.id} style={styles.cardStyle}>
+          <Animated.View
+            key={card.id}
+            style={[styles.cardStyle, {top: 15 * (index - activeCard)}]}>
             {renderCard(card)}
-          </View>
+          </Animated.View>
         );
       })
       .reverse();

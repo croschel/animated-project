@@ -9,7 +9,7 @@ import {CARDS} from './src/mocks/cards';
 const App = () => {
   const renderCard = (item: ItemCard) => {
     return (
-      <Card key={item.id}>
+      <Card key={item.id} containerStyle={{borderRadius: 16}}>
         <Card.Title>{item.text}</Card.Title>
         <Card.Image source={{uri: item.uri}} />
         <Text style={{marginVertical: 16}}>I can customize this further.</Text>
