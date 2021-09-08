@@ -12,6 +12,7 @@ interface DeckProps {
   renderCard: (item: ItemCard) => ReactNode;
   onSwipeLeft: (card: ItemCard) => void;
   onSwipeRight: (card: ItemCard) => void;
+  onFinishCards: () => ReactNode;
 }
 
 export const Deck = ({
@@ -19,6 +20,7 @@ export const Deck = ({
   renderCard,
   onSwipeLeft,
   onSwipeRight,
+  onFinishCards,
 }: DeckProps) => {
   // States
   const [activeCard, setActiveCard] = useState<number>(0);
@@ -87,6 +89,9 @@ export const Deck = ({
   };
 
   const renderAllCards = () => {
+    if (activeCard >= data.length) {
+      return onFinishCards();
+    }
     return data.map((card, index) => {
       if (index < activeCard) {
         return null;
@@ -101,6 +106,7 @@ export const Deck = ({
           </Animated.View>
         );
       }
+
       return renderCard(card);
     });
   };

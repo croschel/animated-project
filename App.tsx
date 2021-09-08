@@ -21,6 +21,22 @@ const App = () => {
       </Card>
     );
   };
+
+  const renderNoMoreCards = () => {
+    return (
+      <Card>
+        <Card.Title>We don`t have more Cards</Card.Title>
+        <Text style={{marginVertical: 16, textAlign: 'center'}}>
+          There is no card to show!.
+        </Text>
+        <Button
+          icon={{name: 'search'}}
+          title="Get more!"
+          buttonStyle={{backgroundColor: '#03A9F4'}}
+        />
+      </Card>
+    );
+  };
   return (
     <SafeAreaView>
       <StatusBar barStyle="dark-content" />
@@ -30,6 +46,7 @@ const App = () => {
           renderCard={renderCard}
           onSwipeLeft={() => {}}
           onSwipeRight={() => {}}
+          onFinishCards={renderNoMoreCards}
         />
       </View>
     </SafeAreaView>
