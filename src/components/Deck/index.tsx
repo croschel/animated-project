@@ -92,23 +92,29 @@ export const Deck = ({
     if (activeCard >= data.length) {
       return onFinishCards();
     }
-    return data.map((card, index) => {
-      if (index < activeCard) {
-        return null;
-      }
-      if (index === activeCard) {
-        return (
-          <Animated.View
-            key={card.id}
-            {...panResponder.panHandlers}
-            style={[styles.container, getCardStyles()]}>
-            {renderCard(card)}
-          </Animated.View>
-        );
-      }
+    return data
+      .map((card, index) => {
+        if (index < activeCard) {
+          return null;
+        }
+        if (index === activeCard) {
+          return (
+            <Animated.View
+              key={card.id}
+              {...panResponder.panHandlers}
+              style={[styles.cardStyle, getCardStyles()]}>
+              {renderCard(card)}
+            </Animated.View>
+          );
+        }
 
-      return renderCard(card);
-    });
+        return (
+          <View key={card.id} style={styles.cardStyle}>
+            {renderCard(card)}
+          </View>
+        );
+      })
+      .reverse();
   };
   console.log('Active Card index :: ', activeCard);
 
