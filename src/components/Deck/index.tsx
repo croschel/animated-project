@@ -95,7 +95,7 @@ export const Deck = ({
   };
 
   const onSwipeComplete = (direction: PossibleDirectionsSwipe) => {
-    console.log('Active Card onSwipeComplete :: ', activeCard);
+    // console.log('Active Card onSwipeComplete :: ', activeCard);
     const card = data[activeCard];
     direction === 'right' ? onSwipeRight(card) : onSwipeLeft(card);
     position.setValue({x: 0, y: 0});
@@ -148,7 +148,7 @@ export const Deck = ({
       })
       .reverse();
   };
-  console.log('Active Card index :: ', activeCard);
+  // console.log('Active Card index :: ', activeCard);
 
   return <View style={styles.container}>{renderAllCards()}</View>;
 };
