@@ -1,5 +1,17 @@
-import React, {ReactNode, useRef, useState} from 'react';
-import {View, PanResponder, Animated} from 'react-native';
+import React, {
+  ReactNode,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
+import {
+  View,
+  PanResponder,
+  Animated,
+  UIManager,
+  LayoutAnimation,
+} from 'react-native';
 import {SCREEN_WIDTH} from '../../utils/metrics';
 
 import {styles} from './styles';
@@ -25,14 +37,19 @@ export const Deck = ({
   // States
   const [activeCard, setActiveCard] = useState<number>(0);
 
+  // Declare default position for an Animated.View (Each Card)
   const position = useRef(new Animated.ValueXY()).current;
+
+  // PanResponder is a native APIs from RN that help us to handle with Animated Module and Gestures
   const panResponder = PanResponder.create({
-    onStartShouldSetPanResponder: () => true,
+    onStartShouldSetPanResponder: () => true, // Are you pressing screen?
     onPanResponderMove: (event, gesture) => {
+      // move finger around the screen
       const {dx} = gesture;
       position.setValue({x: dx, y: 0});
     },
     onPanResponderRelease: (event, gesture) => {
+      // user release the finger
       const {dx} = gesture;
       if (dx > SWIPE_THRESHOLD) {
         forceSwipe('right');
@@ -43,6 +60,19 @@ export const Deck = ({
       }
     },
   });
+
+  // Effects
+  // substitute for componentWillMount
+  useLayoutEffect(() => {
+    UIManager.setLayoutAnimationEnabledExperimental &&
+      UIManager.setLayoutAnimationEnabledExperimental(true);
+    LayoutAnimation.spring();
+  }, []);
+  // substitute for componentWillReceiveProps
+  useEffect(() => {
+    setActiveCard(0);
+  }, [data]);
+
   const resetCardPosition = () => {
     Animated.spring(position, {
       toValue: {

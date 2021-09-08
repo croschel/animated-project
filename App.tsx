@@ -1,4 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
+/*
+  When we start to create some animation component we have to decide initialy whats kind of animation do we need...
+  - Basically on RN we have two native options Layout Animations (easier animations) and Animated Module ( more custumized)
+  After that we need to answer a simple three questions with animated module ->>
+  1. Whats the current position of the animated element? -> (Value) -> Value and ValueXY
+  2. How is the animation changing? (Types) -> Spring, Decay and Timing
+  3. Apply the animation`s current position to an actual component. (Components) -> View, Text, Image...
+
+
+ */
 import React from 'react';
 import {View, StatusBar, StyleSheet, SafeAreaView, Text} from 'react-native';
 import {Card, Button} from 'react-native-elements';
